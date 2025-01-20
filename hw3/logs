@@ -1,0 +1,13 @@
+1.Systemd веде системні логи через journald:
+	journalctl
+	journalctl -n 50  		останні записи
+	journalctl -f			реальний час
+	journalctl -u <назва_служби>	журнали конкретної служби
+	journalctl -k			помилки ядра
+
+2.Логи знаходяться в /var/log:
+	cat /var/log/syslog		загальні логи 
+	cat /var/log/kern.log		логи ядра
+	cat /var/log/auth.log		логи авторизації
+	
+	
