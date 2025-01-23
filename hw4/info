@@ -1,0 +1,15 @@
+додаємо юзера:
+	useradd -G sudo -m -s /bin/bash bob
+скрипт:
+	touch /home/bob/change_host  
+	chmod 700 change_host
+	./change_host
+
+команди:
+	sudo apt install nginx - завантаження nginx
+	systemctl status nginx - статус демона
+	curl http://localhost - запит сторінки nginx
+	sudo apt install net-tools - завантаження netstat
+	netstat -tulpn - перегляд відкритих портів
+	
+	nginx працює на :80 порту

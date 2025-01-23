@@ -1,0 +1,18 @@
+#!/bin/bash
+# + соответствует одному или более повторениям элемента
+# * соответствует нулю или более повторениям элемента
+while true; do
+	echo -e -n "The name must begin with a letter!\nEnter name: "
+	read newname
+	if [[ $newname =~ ^[a-zA-Z][a-zA-Z0-9]*$ ]]; then 
+		sudo hostnamectl set-hostname $newname
+		echo -e "New name is $newname\nReboot your system for changes"
+		break
+	else 
+		echo "Incorrect input"
+	fi
+done	
+
+
+
+
