@@ -1,0 +1,10 @@
+[Unit]
+Decription=Watch script
+
+[Service]
+Environment=HOME=/home/reflection
+ExecStart=/home/reflection/danit/homeworks/homework5/src/watch
+Restart=always
+
+[Install]
+WantedBy=multi-user.targets

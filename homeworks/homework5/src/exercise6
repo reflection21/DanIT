@@ -1,0 +1,4 @@
+#!/bin/bash
+
+read -p "Enter word: " word
+echo $word | rev

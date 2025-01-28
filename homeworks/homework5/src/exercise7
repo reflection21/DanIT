@@ -1,0 +1,8 @@
+#!/bin/bash
+
+read -p "Enter file: " file
+if [ -f $file ]; then
+	x=$(wc -l < $file)
+	echo "number of lines = $x"
+fi	
+

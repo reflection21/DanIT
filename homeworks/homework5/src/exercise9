@@ -1,0 +1,9 @@
+#!/bin/bash
+
+read -p "Enter file: " file
+
+if [ -f $file ]; then 
+	cat $file  
+else 
+	echo "$file doesnt exist"
+fi

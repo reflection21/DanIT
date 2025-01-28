@@ -1,0 +1,6 @@
+#!/bin/bash
+
+fruits=(banana orange apple)
+for i in ${fruits[*]}; do
+	echo $i
+done	

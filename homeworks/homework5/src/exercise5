@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ $# -eq 2 ]; then 
+	if [ -e $1 ]; then
+		cp $1 $2 
+		echo "file successfully copied"
+	else 
+		echo "file $1 doesnt exist"
+	fi
+else 
+	echo -e "ERROR\nYou need to enter 2 arguments"
+fi	

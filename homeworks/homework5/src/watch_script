@@ -1,0 +1,13 @@
+#!/bin/bash
+
+dir="$HOME/watch"
+
+while true; do 
+	for files in $dir/*; do
+		if [ -f $files ] && [[ ! $files =~ \.back$ ]]; then
+			cat $files
+			mv $files $files.back
+		fi
+	sleep 1 
+	done
+done	
