@@ -1,0 +1,24 @@
+#!/bin/bash  
+
+random=$(( $RANDOM % 100 + 1 )) # create random number
+x=1
+echo -e "Вгадайте число від 1 до 100\nВи маєте 5 спроб"
+while [ $x -le 5 ]; do 
+	echo -n "Введіть число: " 
+	read number
+	if (( random == number )); then
+		echo "Вітаємо! Ви вгадали правильне число"
+		break
+	elif (( number < random )); then
+		echo "Занадто низько"
+	
+	elif (( number > random )); then
+		echo "Занадто високо"
+	fi
+	echo "Залишилось спроб $((5-x))"
+	((x++))
+
+done
+if (( number != random )); then
+	echo -e "Вибачте, у вас закінчилися спроби\nПравильним числом було $random"
+fi
