@@ -1,0 +1,11 @@
+#!/bin/bash
+#for inspect /dev/sdc 
+
+limit=$1
+file_log="/var/log/disk.log"
+use_disk=$( df / | awk 'NR==2 {print$5}' | sed 's/%//' )
+if [ $use_disk -gt $limit ]; then
+	echo "$(date) warning: disk loaded at $use_disk%" >> $file_log
+else
+	echo "$(date) disk not loaded" >> $file_log
+fi	
