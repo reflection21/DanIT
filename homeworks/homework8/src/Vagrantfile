@@ -1,0 +1,19 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/focal64"
+  config.vm.provider "virtualbox" do |vb|
+    vb.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ]
+    vb.memory = "2048"
+    vb.cpus = "2"
+    config.vm.network "public_network", bridge: "Realtek PCIe GbE Family Controller"
+    config.vm.provision "shell", inline: <<-SHELL
+        apt update -y
+        apt install -y nginx
+        sed -i 's/listen 80 default_server;/listen 82 default_server;/' /etc/nginx/sites-available/default
+        sed -i 's/listen \\[::\\]:80 default_server;/listen \\[::\\]:82 default_server;/' /etc/nginx/sites-available/default 
+        sed -i 's/Welcome to nginx!/Hi, Artem!/' /var/www/html/index.nginx-debian.html 
+        systemctl restart nginx
+    SHELL
+  end
+  config.vm.boot_timeout = 600
+end
+
