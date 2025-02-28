@@ -12,17 +12,11 @@ sudo su app_user -c "mkdir -p /home/app_user/project_dir/PetClinic/target && chm
 sudo wget -P /opt/ https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz
 sudo tar xf /opt/apache-maven-3.9.9-bin.tar.gz -C /opt/ && rm -rf /opt/apache-maven-3.9.9-bin.tar.gz
 echo "export PATH=$PATH:/opt/apache-maven-3.9.9/bin" | sudo tee -a /etc/environment
-# echo "export MYSQL_USER=${DB_USER_APP}" | sudo tee -a /etc/environment
-# echo "export MYSQL_URL=jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}" | sudo tee -a /etc/environment
-# echo "export MYSQL_PASS=${DB_PASS_APP}" | sudo tee -a /etc/environment
 sudo su app_user -c "cd /home/app_user/project_dir/PetClinic && mvn package"
 sudo su app_user -c "mv /home/app_user/project_dir/PetClinic/target/spring-petclinic-2.3.1.BUILD-SNAPSHOT.jar /home/app_user/app.jar"
-# sudo su app_user -c "cd /home/app_user && java -Dspring.profiles.active=mysql -jar app.jar" #> /home/app_user/var.log 2>&1
-
 sudo su app_user -c "cd /home/app_user"
 sudo su app_user -c "java -jar /home/app_user/app.jar --spring.profiles.active=mysql --spring.datasource.url=jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME} --spring.datasource.username=${DB_USER_APP} --spring.datasource.password=${DB_PASS_APP}"
 
 
 
 
-sudo su app_user -c "java -jar /home/app_user/app.jar --spring.profiles.active=mysql --spring.datasource.url=jdbc:mysql://192.168.56.12:3306/db_client --spring.datasource.username=app --spring.datasource.password=app"
