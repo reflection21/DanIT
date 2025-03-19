@@ -21,4 +21,4 @@ def guess_number(min_value, max_value, tries):
         print(f"You have {tries} tries.\n")
     if value_of_player != random_number:
         print(f"You lose, try again. The winnable number was {random_number}.")
-guess_number(5,25,5)
+guess_number(1,100,5)
