@@ -1,0 +1,4 @@
+Dockerfile
+.hw12env
+__pycache__
+.pytest_cache
