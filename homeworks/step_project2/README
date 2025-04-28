@@ -1,24 +1,38 @@
 ------------STEP_PROJECT_2------------
 
-1. Поднятие двух виртуалок  спомощью вагранта
-vagrant up
-vagrant destroy -f
-vagrant status
-vagant ssh
-vagrant suspend
-vagrant resume
+1. Setting Up Two Virtual Machines Using Vagrant
+vagrant up — Start the virtual machines.
 
-2. Конфигурим дженкинса
+- vagrant destroy -f — Forcefully destroy the virtual machines.
+- vagrant status — Check the current status of the virtual machines.
+- vagrant ssh — SSH into the virtual machine.
+- vagrant suspend — Suspend the virtual machines (pause their state).
+- vagrant resume — Resume the suspended virtual machines.
+
+2. Configuring Jenkins
+Retrieve the Jenkins admin password:
 - cat /var/lib/jenkins/secrets/initialAdminPassword
-- install plugins (Dashboard View, ssh agent, github, locale, docker pipeline)
-- в безопасности ставим статик порт 50000 для агента , no-verification
-- создаем ноду с метками
-- создаем юнит сервис для дженкинс агента  
-    vi /lib/systemd/system/jenkins-agent.service
-    sudo systemctl daemon-reloadasd
-    sudo systemctl enable jenkins-agent.service
-    sudo systemctl restart jenkins-agent.service
 
-3. Создаем пайплайн
-- пулим репозиторий
-- создаем ключи докер и гитхаб (на агенте)
+Install the following plugins:
+    Dashboard View
+    SSH Agent
+    GitHub
+    Locale
+    Docker Pipeline
+
+In the security settings, configure the following:
+Set a static port 50000 for the agent.
+Enable no-verification for the agent connection.
+S   et a static port 50000 for the agent.
+
+Create a new Jenkins node with specific labels.
+
+Create a unit service for the Jenkins agent:
+    - vi /lib/systemd/system/jenkins-agent.service
+    - sudo systemctl daemon-reload
+    - sudo systemctl enable jenkins-agent.service
+    - sudo systemctl restart jenkins-agent.service
+
+3. Creating a Jenkins Pipeline
+Pull the repository to the Jenkins server.
+Generate Docker and GitHub keys on the agent for authentication.
