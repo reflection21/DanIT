@@ -23,7 +23,7 @@ Install the following plugins:
 In the security settings, configure the following:
 Set a static port 50000 for the agent.
 Enable no-verification for the agent connection.
-S   et a static port 50000 for the agent.
+Set a static port 50000 for the agent.
 
 Create a new Jenkins node with specific labels.
 
