@@ -1,0 +1,58 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_CREDENTIALS_ID = 'dockerhubkey'
+        GIT_CREDENTIALS_ID = 'githubkey'
+        DOCKER_IMAGE = 'sweaty1111/step2_app'
+    }
+
+    stages {
+        stage('Clone the repository') {
+            steps {
+                git branch: 'main', credentialsId: "${GIT_CREDENTIALS_ID}", url: 'git@github.com:reflection21/step2.git'
+            }
+        }
+
+
+        stage('Build docker image') {
+            steps {
+                script {
+                    docker.build(DOCKER_IMAGE)
+                }
+            }
+        }
+
+        stage('Run container') {
+            steps {
+                sh "docker run -d --name node_app ${DOCKER_IMAGE}"
+                sleep 7
+                sh "docker stop node_app"
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                script {
+                    sh "docker run ${DOCKER_IMAGE} test"
+                }
+            }
+        }
+
+        stage('Push to the docker registry') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
+                        docker.image(DOCKER_IMAGE).push()
+                    }
+                }
+            }
+        }
+
+        stage('Delete all object of docker') {
+            steps {
+                sh "docker system prune -a -f"
+            }
+        }
+    }
+}
