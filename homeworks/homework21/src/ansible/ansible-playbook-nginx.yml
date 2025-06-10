@@ -1,0 +1,5 @@
+---
+- name: deploy nginx
+  hosts: webservers
+  roles:
+    - nginx

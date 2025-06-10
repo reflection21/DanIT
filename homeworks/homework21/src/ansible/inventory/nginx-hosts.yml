@@ -1,0 +1,11 @@
+all:
+  children:
+    webservers:
+      hosts:
+        host1:
+          ansible_host: 16.171.114.85
+        host2:
+          ansible_host: 51.20.8.59
+      vars:
+        ansible_user: ubuntu
+        ansible_ssh_private_key_file: ~/.ssh/terraform-server
