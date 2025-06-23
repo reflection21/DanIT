@@ -1,0 +1,12 @@
+all:
+  children:
+    jenkins_master:
+      hosts:
+        51.20.69.126:
+          ansible_user: ubuntu
+
+    jenkins_worker:
+      hosts:
+        21.0.11.149:
+          ansible_user: ubuntu
+          ansible_ssh_common_args: "-o ProxyJump=ubuntu@51.20.69.126 -i ~/.ssh/terraform-server"

@@ -1,5 +1,5 @@
 resource "aws_instance" "public" {
-  count           = 2
+  count           = var.count_instance
   ami             = "ami-0c1ac8a41498c1a9c"
   instance_type   = "t3.micro"
   subnet_id       = var.public_subnet[count.index]
@@ -16,6 +16,8 @@ resource "aws_instance" "public" {
   #       EOT
   tags = {
     Name = "nginx-server-${count.index + 1}"
+    Team = "dev-${count.index + 1}"
+    Team = "prod-${count.index + 1}"
   }
 }
 

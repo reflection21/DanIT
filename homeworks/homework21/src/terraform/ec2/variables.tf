@@ -6,3 +6,8 @@ variable "public_sg" {
   description = "sg for public"
   type        = string
 }
+
+variable "count_instance" {
+  description = "count"
+  type = number
+}

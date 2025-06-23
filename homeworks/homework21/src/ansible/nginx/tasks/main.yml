@@ -1,43 +1,73 @@
 ---
 # tasks file for nginx
-- name: Install docker and docker-compose
-  become: true
-  ansible.builtin.apt:
-    name:
-      - docker.io
-      - docker-compose
+
+# Добавим официальный GPG-ключ Docker
+- name: Add Docker GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
     state: present
-    update_cache: yes
+  become: true
   tags: install_docker
 
-- name: Ensure docker service is running
+# Добавим официальный Docker репозиторий
+- name: Add Docker apt repository
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+    state: present
   become: true
-  ansible.builtin.service:
+  tags: install_docker
+
+# Обновим кэш apt
+- name: Update apt cache
+  apt:
+    update_cache: yes
+  become: true
+  tags: install_docker
+
+# Установим Docker и docker compose v2 plugin
+- name: Install Docker and docker-compose plugin
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin
+    state: present
+  become: true
+  tags: install_docker
+
+# Убедимся, что Docker работает
+- name: Ensure Docker service is running
+  service:
     name: docker
     state: started
     enabled: true
+  become: true
   tags: install_docker
 
+# Добавим пользователя ubuntu в группу docker
 - name: Add ubuntu user to docker group
-  become: true
-  ansible.builtin.user:
+  user:
     name: ubuntu
     groups: docker
     append: true
+  become: true
   tags: docker_group
 
+# Скопируем docker-compose.yml
 - name: Copy docker-compose.yml
-  ansible.builtin.copy:
+  copy:
     src: docker-compose.yml
     dest: /home/ubuntu/docker-compose.yml
     owner: ubuntu
     group: ubuntu
-    mode: '0644'
+    mode: "0644"
   become: true
   tags: copy
 
+# Запустим docker compose
 - name: Start docker-compose
-  community.docker.docker_compose:
+  community.docker.docker_compose_v2:
     project_src: /home/ubuntu/
     state: present
   become: true

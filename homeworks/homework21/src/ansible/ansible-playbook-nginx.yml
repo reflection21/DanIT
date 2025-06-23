@@ -1,5 +1,10 @@
 ---
 - name: deploy nginx
-  hosts: webservers
+  hosts: prefix_prod_1
   roles:
     - nginx
+
+- name: deploy nginx
+  hosts: prefix_prod_2
+  roles:
+    - nginx    

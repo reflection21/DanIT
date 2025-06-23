@@ -1,0 +1,48 @@
+---
+# tasks file for jenkins
+- name: install nginx
+  apt:
+    update_cache: true
+    name: nginx
+    state: present
+  become: true
+  tags: nginx
+
+- name: copy nginx config
+  copy:
+    src: nginx.conf
+    dest: /etc/nginx/sites-available/default
+  become: true
+  notify: reload nginx
+  tags: nginx
+
+- name: install java
+  apt:
+    name: "{{ jdk_version }}"
+    state: present
+  become: true
+  tags: java
+
+- name: download Jenkins GPG key
+  get_url:
+    url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+    dest: /etc/apt/keyrings/jenkins-keyring.asc
+    mode: '0644'
+  become: true  
+  tags: jenkins
+
+- name: Add Jenkins repository
+  copy:
+    dest: /etc/apt/sources.list.d/jenkins.list
+    content: |
+      deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/
+  become: true
+  tags: jenkins
+
+- name: install Jenkins
+  apt:
+    update_cache: yes
+    name: jenkins
+    state: present
+  become: true 
+  tags: jenkins

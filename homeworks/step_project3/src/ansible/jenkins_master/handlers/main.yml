@@ -1,0 +1,10 @@
+---
+# handlers file for jenkins
+- name: reload nginx
+  service:
+    name: nginx
+    state: reloaded
+  become: true
+
+
+ 
